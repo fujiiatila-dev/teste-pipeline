@@ -1,12 +1,14 @@
 from pydantic_settings import BaseSettings
-from typing import List, Optional
+from typing import Optional
+import os
+import logging
 
 class Settings(BaseSettings):
     # Meta Ads
     meta_app_id: Optional[str] = None
     meta_app_secret: Optional[str] = None
     meta_access_token: Optional[str] = None
-    meta_ad_account_ids: Optional[str] = None # CSV string: act_1,act_2
+    meta_ad_account_ids: Optional[str] = None
 
     # ClickHouse
     clickhouse_host: str = "localhost"
@@ -39,5 +41,23 @@ class Settings(BaseSettings):
 
     class Config:
         env_file = ".env"
+
+    def get(self, key: str):
+        """
+        Tenta buscar a configuração:
+        1. De uma Variável do Prefect (Dinâmico via UI)
+        2. Do valor carregado no objeto (via .env ou env var)
+        """
+        try:
+            from prefect.variables import Variable
+            # Tenta buscar no Prefect (Sync)
+            pref_var = Variable.get(key, default=None)
+            if pref_var is not None:
+                return pref_var
+        except Exception:
+            pass
+        
+        # Fallback para o valor padrão do Pydantic
+        return getattr(self, key, None)
 
 settings = Settings()
