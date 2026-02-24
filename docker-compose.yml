@@ -13,11 +13,13 @@ services:
       test: ["CMD-SHELL", "python -c \"import urllib.request; urllib.request.urlopen('http://localhost:4200/api/health')\""]
       interval: 10s
       timeout: 5s
-      retries: 5
+      retries: 10
+      start_period: 30s
 
   prefect-worker:
     build: .
     container_name: prefect-worker
+    restart: on-failure
     depends_on:
       prefect-server:
         condition: service_healthy

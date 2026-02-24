@@ -1,4 +1,4 @@
-FROM python:3.11-slim
+FROM prefecthq/prefect:2-latest
 
 WORKDIR /app
 

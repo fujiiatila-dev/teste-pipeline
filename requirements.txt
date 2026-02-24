@@ -1,4 +1,4 @@
-prefect>=2.19
+
 facebook-business>=19.0.0
 clickhouse-connect>=0.7.0
 pandas>=2.0.0
