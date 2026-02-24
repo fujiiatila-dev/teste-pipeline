@@ -1,0 +1,48 @@
+version: "3.9"
+
+services:
+  prefect-server:
+    image: prefecthq/prefect:2-latest
+    container_name: prefect-server
+    command: prefect server start
+    environment:
+      - PREFECT_SERVER_API_HOST=0.0.0.0
+    ports:
+      - "4200:4200"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:4200/api/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  prefect-worker:
+    build: .
+    container_name: prefect-worker
+    depends_on:
+      prefect-server:
+        condition: service_healthy
+    environment:
+      - PREFECT_API_URL=http://prefect-server:4200/api
+      - CLICKHOUSE_HOST=${CLICKHOUSE_HOST:-localhost}
+      - CLICKHOUSE_PORT=${CLICKHOUSE_PORT:-8123}
+      - CLICKHOUSE_USER=${CLICKHOUSE_USER:-default}
+      - CLICKHOUSE_PASSWORD=${CLICKHOUSE_PASSWORD:-}
+      - CLICKHOUSE_DATABASE=${CLICKHOUSE_DATABASE:-marketing}
+      - META_APP_ID=${META_APP_ID}
+      - META_APP_SECRET=${META_APP_SECRET}
+      - META_ACCESS_TOKEN=${META_ACCESS_TOKEN}
+      - PAYTOUR_EMAIL=${PAYTOUR_EMAIL}
+      - PAYTOUR_PASSWORD=${PAYTOUR_PASSWORD}
+      - PAYTOUR_LOJA_ID=${PAYTOUR_LOJA_ID}
+      - PAYTOUR_APP_KEY=${PAYTOUR_APP_KEY}
+      - PAYTOUR_APP_SECRET=${PAYTOUR_APP_SECRET}
+      - LEADS2B_TOKEN=${LEADS2B_TOKEN}
+      - SHOPIFY_SHOP_NAME=${SHOPIFY_SHOP_NAME}
+      - SHOPIFY_ACCESS_TOKEN=${SHOPIFY_ACCESS_TOKEN}
+      - SHOPIFY_API_VERSION=${SHOPIFY_API_VERSION}
+      - OMIE_APP_KEY=${OMIE_APP_KEY}
+      - OMIE_APP_SECRET=${OMIE_APP_SECRET}
+      - SILBECK_TOKEN=${SILBECK_TOKEN}
+    volumes:
+      - .:/app
+    command: prefect worker start --pool default-agent-pool

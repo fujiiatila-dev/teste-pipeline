@@ -1,0 +1,7 @@
+prefect>=2.19
+facebook-business>=19.0.0
+clickhouse-connect>=0.7.0
+pandas>=2.0.0
+python-dotenv>=1.0.0
+pydantic-settings>=2.0.0
+requests>=2.31.0
