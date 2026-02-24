@@ -10,7 +10,7 @@ services:
     ports:
       - "4200:4200"
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:4200/api/health"]
+      test: ["CMD-SHELL", "python -c \"import urllib.request; urllib.request.urlopen('http://localhost:4200/api/health')\""]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -45,4 +45,4 @@ services:
       - SILBECK_TOKEN=${SILBECK_TOKEN}
     volumes:
       - .:/app
-    command: prefect worker start --pool default-agent-pool
+    command: prefect worker start --pool default
