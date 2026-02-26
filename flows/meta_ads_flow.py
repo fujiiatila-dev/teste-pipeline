@@ -10,10 +10,10 @@ import logging
 @task(retries=3, retry_delay_seconds=60)
 def extract_meta_data(date_start: datetime, date_stop: datetime, credentials: dict):
     connector = MetaAdsConnector(
-        app_id=credentials.get("meta_app_id") or credentials.get("app_id"),
+        app_id=credentials.get("meta_app_id") or credentials.get("app_id") or "1617411648834739", # ID padrão do projeto Meta
         app_secret=credentials.get("meta_app_secret") or credentials.get("app_secret"),
-        access_token=credentials.get("meta_access_token") or credentials.get("access_token"),
-        account_ids=credentials.get("meta_ad_account_ids") or credentials.get("account_ids") or credentials.get("ad_account_id")
+        access_token=credentials.get("access_token") or credentials.get("meta_access_token"),
+        account_ids=credentials.get("accounts_ids") or credentials.get("meta_ad_account_ids") or credentials.get("account_ids")
     )
     data = connector.extract(date_start, date_stop)
     
@@ -66,7 +66,7 @@ def load_to_clickhouse(data_dict: dict, credentials: dict, dt_stop: datetime):
 @flow(name="Meta Ads to ClickHouse")
 def meta_ads_pipeline(date_start: str = None, date_stop: str = None):
     SHEET_ID = "1ZA4rVPpHqDNvdw7t1gajgoCeV1uAaIM_sdI90BUCKIE"
-    GID_META_ADS = "457493218" # Exemplo, o usuário deve confirmar ou ajustar
+    GID_META_ADS = "1615208458" # Atualizado conforme URL do usuário
 
     print(f"Buscando configurações na Planilha ID: {SHEET_ID}")
     manager = GSheetsManager(sheet_id=SHEET_ID)

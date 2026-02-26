@@ -61,6 +61,9 @@ class MetaAdsConnector(BaseConnector):
         ]
 
     def extract(self, date_start: datetime, date_stop: datetime) -> dict:
+        # Inicializa a API do Meta
+        _ = self.api
+
         all_campaigns = []
         all_insights = []
 
@@ -72,6 +75,14 @@ class MetaAdsConnector(BaseConnector):
         }
 
         for acc_id in self.account_ids:
+            acc_id = acc_id.strip()
+            if not acc_id:
+                continue
+            
+            # O SDK do Meta espera o prefixo 'act_' antes do ID numérico
+            if not acc_id.startswith('act_'):
+                acc_id = f"act_{acc_id}"
+                
             account = AdAccount(acc_id)
             
             # Extract Campaigns

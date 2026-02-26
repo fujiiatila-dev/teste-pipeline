@@ -62,7 +62,7 @@ def load_rdmkt_to_clickhouse(data: dict, credentials: dict, dt_stop: datetime):
 @flow(name="RD Marketing to ClickHouse")
 def rd_marketing_pipeline(date_start: str = None, date_stop: str = None):
     SHEET_ID = "1ZA4rVPpHqDNvdw7t1gajgoCeV1uAaIM_sdI90BUCKIE"
-    GID_RDMKT = "834712605" # Exemplo, o usuário deve confirmar ou ajustar
+    GID_RDMKT = "1479848665" # Atualizado conforme URL do usuário
 
     print(f"Buscando configurações na Planilha ID: {SHEET_ID}")
     manager = GSheetsManager(sheet_id=SHEET_ID)
