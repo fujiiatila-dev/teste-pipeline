@@ -10,11 +10,11 @@ from scripts.gsheets_manager import GSheetsManager
 @task(retries=3, retry_delay_seconds=60)
 def extract_rdmkt_data(date_start: datetime, date_stop: datetime, credentials: dict):
     connector = RDMarketingConnector(
-        client_id=credentials.get("rd_client_id"),
-        client_secret=credentials.get("rd_client_secret"),
-        refresh_token=credentials.get("rd_refresh_token"),
-        x_api_key=credentials.get("rd_x_api_key"),
-        alias=credentials.get("rd_company_alias")
+        client_id=credentials.get("rd_client_id") or credentials.get("client_id"),
+        client_secret=credentials.get("rd_client_secret") or credentials.get("client_secret"),
+        refresh_token=credentials.get("rd_refresh_token") or credentials.get("refresh_token") or credentials.get("token"),
+        x_api_key=credentials.get("rd_x_api_key") or credentials.get("x_api_key"),
+        alias=credentials.get("rd_company_alias") or credentials.get("alias")
     )
     data = connector.extract(date_start, date_stop)
     

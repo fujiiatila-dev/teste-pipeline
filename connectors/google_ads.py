@@ -7,7 +7,7 @@ from datetime import datetime
 
 class GoogleAdsConnector(BaseConnector):
     def __init__(self, developer_token: str = None, client_id: str = None, client_secret: str = None, refresh_token: str = None, login_customer_id: str = None, customer_ids: str = None):
-        credentials = {
+        self.credentials = {
             "developer_token": developer_token or settings.google_ads_developer_token,
             "client_id": client_id or settings.google_ads_client_id,
             "client_secret": client_secret or settings.google_ads_client_secret,
@@ -15,10 +15,23 @@ class GoogleAdsConnector(BaseConnector):
             "login_customer_id": login_customer_id or settings.google_ads_login_customer_id,
             "use_proto_plus": True
         }
-        self.client = GoogleAdsClient.load_from_dict(credentials, version="v17")
+        self._client = None
         # customer_ids can be a comma-separated string if multiple
         current_customer_ids = customer_ids or settings.google_ads_customer_id
         self.customer_ids = current_customer_ids.split(",") if current_customer_ids else []
+
+    @property
+    def client(self):
+        if self._client is None:
+            # Check if we have minimum requirements to load the client
+            if not self.credentials["login_customer_id"] or len(str(self.credentials["login_customer_id"])) < 10:
+                raise ValueError(
+                    f"Invalid login_customer_id: '{self.credentials['login_customer_id']}'. "
+                    "Make sure it's a 10-digit string in the Spreadsheet or .env"
+                )
+            # Removemos a versão fixa para deixar a biblioteca usar a mais recente disponível (ex: v23)
+            self._client = GoogleAdsClient.load_from_dict(self.credentials)
+        return self._client
 
     def get_tables_ddl(self) -> list:
         return [

@@ -13,12 +13,20 @@ class MetaAdsConnector(BaseConnector):
         self.app_secret = app_secret or settings.meta_app_secret
         self.access_token = access_token or settings.meta_access_token
         self.account_ids = (account_ids or settings.meta_ad_account_ids or "").split(",") if (account_ids or settings.meta_ad_account_ids) else []
+        self._api = None
 
-        self.api = FacebookAdsApi.init(
-            self.app_id,
-            self.app_secret,
-            self.access_token
-        )
+    @property
+    def api(self):
+        if self._api is None:
+             if not self.app_id or not self.access_token:
+                 raise ValueError("Meta App ID and Access Token must be provided in the Spreadsheet or .env")
+             
+             self._api = FacebookAdsApi.init(
+                 self.app_id,
+                 self.app_secret,
+                 self.access_token
+             )
+        return self._api
 
     def get_tables_ddl(self) -> list:
         return [

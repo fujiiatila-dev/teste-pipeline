@@ -10,7 +10,7 @@ services:
     ports:
       - "4200:4200"
     healthcheck:
-      test: ["CMD-SHELL", "python -c \"import urllib.request; urllib.request.urlopen('http://localhost:4200/api/health')\""]
+      test: [ "CMD-SHELL", "python -c \"import urllib.request; urllib.request.urlopen('http://localhost:4200/api/health')\"" ]
       interval: 10s
       timeout: 5s
       retries: 10
@@ -25,11 +25,14 @@ services:
         condition: service_healthy
     environment:
       - PREFECT_API_URL=http://prefect-server:4200/api
-      - CLICKHOUSE_HOST=${CLICKHOUSE_HOST:-localhost}
+      - CLICKHOUSE_HOST=${CLICKHOUSE_HOST:-host.docker.internal}
       - CLICKHOUSE_PORT=${CLICKHOUSE_PORT:-8123}
-      - CLICKHOUSE_USER=${CLICKHOUSE_USER:-default}
-      - CLICKHOUSE_PASSWORD=${CLICKHOUSE_PASSWORD:-}
-      - CLICKHOUSE_DATABASE=${CLICKHOUSE_DATABASE:-marketing}
+      - CLICKHOUSE_USER=${CLICKHOUSE_USER:-nalk_worker}
+      - CLICKHOUSE_PASSWORD=${CLICKHOUSE_PASSWORD:-@Datanalk!2025DN}
+      - MINIO_ENDPOINT=http://minio-server:9000
+      - MINIO_EXTERNAL_ENDPOINT=http://host.docker.internal:9000
+      - MINIO_ACCESS_KEY=${MINIO_ACCESS_KEY:-admin}
+      - MINIO_SECRET_KEY=${MINIO_SECRET_KEY:-miniopassword123}
       - META_APP_ID=${META_APP_ID}
       - META_APP_SECRET=${META_APP_SECRET}
       - META_ACCESS_TOKEN=${META_ACCESS_TOKEN}

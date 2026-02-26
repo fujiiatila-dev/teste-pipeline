@@ -10,10 +10,10 @@ import logging
 @task(retries=3, retry_delay_seconds=60)
 def extract_meta_data(date_start: datetime, date_stop: datetime, credentials: dict):
     connector = MetaAdsConnector(
-        app_id=credentials.get("meta_app_id"),
-        app_secret=credentials.get("meta_app_secret"),
-        access_token=credentials.get("meta_access_token"),
-        account_ids=credentials.get("meta_ad_account_ids")
+        app_id=credentials.get("meta_app_id") or credentials.get("app_id"),
+        app_secret=credentials.get("meta_app_secret") or credentials.get("app_secret"),
+        access_token=credentials.get("meta_access_token") or credentials.get("access_token"),
+        account_ids=credentials.get("meta_ad_account_ids") or credentials.get("account_ids") or credentials.get("ad_account_id")
     )
     data = connector.extract(date_start, date_stop)
     
