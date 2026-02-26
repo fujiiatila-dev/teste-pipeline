@@ -1,30 +1,25 @@
 import pandas as pd
-from typing import List, Dict
+import requests
+import io
 
 class GSheetsManager:
     """
-    Controlador Mestre do Pipeline usando Google Sheets.
-    Lê uma planilha pública do Google e retorna seus valores como dicionários.
+    Gerenciador de leitura de planilhas Google Sheets via exportação CSV.
     """
-    
-    # URL pública base para extração de CSV do Google Drive
-    BASE_URL = "https://docs.google.com/spreadsheets/d/{sheet_id}/export?format=csv&gid={gid}"
-    
     def __init__(self, sheet_id: str):
         self.sheet_id = sheet_id
+        self.base_url = "https://docs.google.com/spreadsheets/d"
 
-    def get_tab_data(self, gid: str) -> List[Dict]:
-        """
-        Lê uma aba específica (pelo GID) e retorna a lista de linhas válidas em formato Dict.
-        Ignora linhas sem 'company_id'.
-        """
-        url = self.BASE_URL.format(sheet_id=self.sheet_id, gid=gid)
+    def _get_csv_url(self, gid: str) -> str:
+        return f"{self.base_url}/{self.sheet_id}/export?format=csv&gid={gid}"
+
+    def get_tab_data(self, gid: str) -> list:
+        url = self._get_csv_url(gid)
         try:
-            # Lendo direto com o Pandas da URL pública CSV
-            df = pd.read_csv(url)
+            response = requests.get(url)
+            response.raise_for_status()
             
-            # Limpa colunas ou linhas totalmente vazias
-            df.dropna(how='all', inplace=True)
+            df = pd.read_csv(io.StringIO(response.text))
             
             # Remove colunas totalmente vazias e linhas nulas
             df = df.dropna(how='all').fillna('')
@@ -34,8 +29,7 @@ class GSheetsManager:
             
             for row in data:
                 # Se não tem project_id ou company_id, tentamos gerar um a partir do nome ou campos disponíveis
-                # Isso permite que o pipeline rode mesmo sem o ID da API legada
-                client_name = row.get('project_id') or row.get('company_name') or row.get('name') or 'unknown'
+                client_name = str(row.get('project_id') or row.get('company_name') or row.get('name') or 'unknown')
                 
                 # Geramos um slug determinístico para ser o ID interno
                 generated_id = client_name.lower().replace(' ', '_').replace('-', '_').strip()
@@ -54,5 +48,3 @@ class GSheetsManager:
         except Exception as e:
             print(f"Erro ao ler tab {gid} da planilha: {e}")
             return []
-
-```
