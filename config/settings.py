@@ -34,7 +34,7 @@ class Settings(BaseSettings):
     # PayTour
     paytour_email: Optional[str] = None
     paytour_password: Optional[str] = None
-    paytour_loja_id: Optional[int] = None
+    paytour_loja_id: Optional[str] = None
     paytour_app_key: Optional[str] = None
     paytour_app_secret: Optional[str] = None
 

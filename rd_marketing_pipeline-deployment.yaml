@@ -1,0 +1,53 @@
+###
+### A complete description of a Prefect Deployment for flow 'RD Marketing to ClickHouse'
+###
+name: RD Marketing - MultiClient
+description: null
+version: null
+# The work queue that will handle this deployment's runs
+work_queue_name: default
+work_pool_name: default
+tags: []
+parameters: {}
+schedule: null
+schedules: []
+is_schedule_active: null
+infra_overrides: {}
+infrastructure:
+  type: process
+  env: {}
+  labels: {}
+  name: null
+  command: null
+  stream_output: true
+  working_dir: null
+  block_type_slug: process
+  _block_type_slug: process
+
+###
+### DO NOT EDIT BELOW THIS LINE
+###
+flow_name: RD Marketing to ClickHouse
+manifest_path: null
+storage: null
+path: /app
+entrypoint: flows/rd_marketing_flow.py:rd_marketing_pipeline
+parameter_openapi_schema:
+  title: Parameters
+  type: object
+  properties:
+    date_start:
+      default: null
+      position: 0
+      title: date_start
+      type: string
+    date_stop:
+      default: null
+      position: 1
+      title: date_stop
+      type: string
+  required: null
+  definitions: null
+timestamp: '2026-02-26T02:46:45.256426+00:00'
+triggers: []
+enforce_parameter_schema: null

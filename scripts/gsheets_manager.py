@@ -26,20 +26,33 @@ class GSheetsManager:
             # Limpa colunas ou linhas totalmente vazias
             df.dropna(how='all', inplace=True)
             
-            # Vamos padronizar o nome de algumas colunas que podem vir com espaços
-            df.columns = [str(c).strip() for c in df.columns]
-
-            # Converter para lista de dicionários
-            records = df.to_dict(orient='records')
+            # Remove colunas totalmente vazias e linhas nulas
+            df = df.dropna(how='all').fillna('')
             
-            # Filtro essencial: Só aceitar os que tem company_id! (exatamente como você queria)
-            valid_records = []
-            for r in records:
-                if pd.notna(r.get('company_id')) and str(r.get('company_id')).strip() != "":
-                    valid_records.append(r)
-                    
-            return valid_records
+            data = df.to_dict('records')
+            valid_clients = []
             
+            for row in data:
+                # Se não tem project_id ou company_id, tentamos gerar um a partir do nome ou campos disponíveis
+                # Isso permite que o pipeline rode mesmo sem o ID da API legada
+                client_name = row.get('project_id') or row.get('company_name') or row.get('name') or 'unknown'
+                
+                # Geramos um slug determinístico para ser o ID interno
+                generated_id = client_name.lower().replace(' ', '_').replace('-', '_').strip()
+                
+                if not row.get('project_id'):
+                    row['project_id'] = generated_id
+                
+                if not row.get('company_id'):
+                    row['company_id'] = generated_id
+                
+                # Se tivermos pelo menos um ID gerado ou vindo da planilha, consideramos válido
+                if row['project_id'] != 'unknown':
+                    valid_clients.append(row)
+            
+            return valid_clients
         except Exception as e:
-            print(f"Erro ao ler a planilha {self.sheet_id} aba {gid}: {str(e)}")
+            print(f"Erro ao ler tab {gid} da planilha: {e}")
             return []
+
+```

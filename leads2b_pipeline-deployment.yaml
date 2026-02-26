@@ -1,0 +1,53 @@
+###
+### A complete description of a Prefect Deployment for flow 'Leads2b to ClickHouse'
+###
+name: Leads2b - MultiClient
+description: null
+version: 030f8782423b381899f6ecca933f6211
+# The work queue that will handle this deployment's runs
+work_queue_name: default
+work_pool_name: default
+tags: []
+parameters: {}
+schedule: null
+schedules: []
+is_schedule_active: null
+infra_overrides: {}
+infrastructure:
+  type: process
+  env: {}
+  labels: {}
+  name: null
+  command: null
+  stream_output: true
+  working_dir: null
+  block_type_slug: process
+  _block_type_slug: process
+
+###
+### DO NOT EDIT BELOW THIS LINE
+###
+flow_name: Leads2b to ClickHouse
+manifest_path: null
+storage: null
+path: /app
+entrypoint: flows/leads2b_flow.py:leads2b_pipeline
+parameter_openapi_schema:
+  title: Parameters
+  type: object
+  properties:
+    date_start:
+      default: null
+      position: 0
+      title: date_start
+      type: string
+    date_stop:
+      default: null
+      position: 1
+      title: date_stop
+      type: string
+  required: null
+  definitions: null
+timestamp: '2026-02-26T02:59:31.121570+00:00'
+triggers: []
+enforce_parameter_schema: null
