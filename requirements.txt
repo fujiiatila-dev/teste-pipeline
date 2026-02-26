@@ -5,3 +5,10 @@ pandas>=2.0.0
 python-dotenv>=1.0.0
 pydantic-settings>=2.0.0
 requests>=2.31.0
+google-ads>=23.1.0
+hubspot-api-client>=8.0.0
+aiohttp>=3.9.0
+boto3
+s3fs
+pyarrow
+

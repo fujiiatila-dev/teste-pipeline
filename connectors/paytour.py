@@ -7,8 +7,13 @@ from connectors.base import BaseConnector
 from config.settings import settings
 
 class PayTourConnector(BaseConnector):
-    def __init__(self):
+    def __init__(self, email: str = None, password: str = None, loja_id: int = None, app_key: str = None, app_secret: str = None):
         self.base_url = "https://api.paytour.com.br/v2"
+        self.email = email or settings.paytour_email
+        self.password = password or settings.paytour_password
+        self.loja_id = loja_id or settings.paytour_loja_id
+        self.app_key = app_key or settings.paytour_app_key
+        self.app_secret = app_secret or settings.paytour_app_secret
         self.access_token = None
         self._authenticate()
 
@@ -17,19 +22,19 @@ class PayTourConnector(BaseConnector):
         Autentica na API do PayTour usando credenciais de aplicativo ou e-mail/senha.
         Prioriza credenciais de aplicativo se disponíveis.
         """
-        if settings.paytour_app_key and settings.paytour_app_secret:
-            auth_str = f"{settings.paytour_app_key}:{settings.paytour_app_secret}"
+        if self.app_key and self.app_secret:
+            auth_str = f"{self.app_key}:{self.app_secret}"
             auth_b64 = base64.b64encode(auth_str.encode()).decode()
             url = f"{self.base_url}/lojas/login?grant_type=application"
             headers = {"Authorization": f"Basic {auth_b64}"}
-        elif settings.paytour_email and settings.paytour_password:
-            auth_str = f"{settings.paytour_email}:{settings.paytour_password}"
+        elif self.email and self.password:
+            auth_str = f"{self.email}:{self.password}"
             auth_b64 = base64.b64encode(auth_str.encode()).decode()
-            loja_id = settings.paytour_loja_id
+            loja_id = self.loja_id
             url = f"{self.base_url}/lojas/login?grant_type=password&loja_id={loja_id}"
             headers = {"Authorization": f"Basic {auth_b64}"}
         else:
-            raise ValueError("Credenciais do PayTour não configuradas no .env")
+            raise ValueError("Credenciais do PayTour não configuradas")
 
         response = requests.post(url, headers=headers)
         response.raise_for_status()

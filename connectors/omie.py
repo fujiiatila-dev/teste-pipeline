@@ -6,10 +6,10 @@ from connectors.base import BaseConnector
 from config.settings import settings
 
 class OmieConnector(BaseConnector):
-    def __init__(self):
+    def __init__(self, app_key: str = None, app_secret: str = None):
         self.base_url = "https://app.omie.com.br/api/v1"
-        self.app_key = settings.omie_app_key
-        self.app_secret = settings.omie_app_secret
+        self.app_key = app_key or settings.omie_app_key
+        self.app_secret = app_secret or settings.omie_app_secret
 
     def _call_api(self, endpoint, call, param=None):
         """

@@ -7,10 +7,10 @@ from connectors.base import BaseConnector
 from config.settings import settings
 
 class ShopifyConnector(BaseConnector):
-    def __init__(self):
-        self.shop_name = settings.shopify_shop_name
-        self.access_token = settings.shopify_access_token
-        self.api_version = settings.shopify_api_version
+    def __init__(self, shop_name: str = None, access_token: str = None, api_version: str = None):
+        self.shop_name = shop_name or settings.shopify_shop_name
+        self.access_token = access_token or settings.shopify_access_token
+        self.api_version = api_version or settings.shopify_api_version
         self.base_url = f"https://{self.shop_name}.myshopify.com/admin/api/{self.api_version}"
 
     def _get_headers(self):

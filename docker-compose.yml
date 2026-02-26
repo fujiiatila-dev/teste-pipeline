@@ -48,3 +48,19 @@ services:
     volumes:
       - .:/app
     command: prefect worker start --pool default
+
+  minio:
+    image: minio/minio:latest
+    container_name: minio-server
+    environment:
+      - MINIO_ROOT_USER=admin
+      - MINIO_ROOT_PASSWORD=miniopassword123
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    command: server /data --console-address ":9001"
+    volumes:
+      - minio_data:/data
+
+volumes:
+  minio_data:

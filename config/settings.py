@@ -10,12 +10,26 @@ class Settings(BaseSettings):
     meta_access_token: Optional[str] = None
     meta_ad_account_ids: Optional[str] = None
 
+    # Google Ads
+    google_ads_developer_token: Optional[str] = None
+    google_ads_client_id: Optional[str] = None
+    google_ads_client_secret: Optional[str] = None
+    google_ads_refresh_token: Optional[str] = None
+    google_ads_login_customer_id: Optional[str] = None
+    google_ads_customer_id: Optional[str] = None
+
     # ClickHouse
     clickhouse_host: str = "localhost"
     clickhouse_port: int = 8123
     clickhouse_user: str = "default"
     clickhouse_password: str = ""
     clickhouse_database: str = "marketing"
+
+    # Data Lake / MinIO / S3
+    minio_endpoint: str = "http://localhost:9000"
+    minio_external_endpoint: str = "http://minio:9000" # Nome do container da rede docker (para o clickhouse acessar)
+    minio_access_key: str = "admin"
+    minio_secret_key: str = "S3curL4kePassw0rd"
 
     # PayTour
     paytour_email: Optional[str] = None

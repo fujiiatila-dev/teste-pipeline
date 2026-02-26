@@ -6,9 +6,9 @@ from connectors.base import BaseConnector
 from config.settings import settings
 
 class Leads2bConnector(BaseConnector):
-    def __init__(self):
+    def __init__(self, token: str = None):
         self.base_url = "https://api-v2.leads2b.com/v2"
-        self.token = settings.get("leads2b_token")
+        self.token = token or settings.get("leads2b_token")
 
     def _get_headers(self):
         return {

@@ -8,13 +8,17 @@ from datetime import datetime
 import time
 
 class MetaAdsConnector(BaseConnector):
-    def __init__(self):
+    def __init__(self, app_id: str = None, app_secret: str = None, access_token: str = None, account_ids: str = None):
+        self.app_id = app_id or settings.meta_app_id
+        self.app_secret = app_secret or settings.meta_app_secret
+        self.access_token = access_token or settings.meta_access_token
+        self.account_ids = (account_ids or settings.meta_ad_account_ids or "").split(",") if (account_ids or settings.meta_ad_account_ids) else []
+
         self.api = FacebookAdsApi.init(
-            settings.meta_app_id,
-            settings.meta_app_secret,
-            settings.meta_access_token
+            self.app_id,
+            self.app_secret,
+            self.access_token
         )
-        self.account_ids = settings.meta_ad_account_ids.split(",") if settings.meta_ad_account_ids else []
 
     def get_tables_ddl(self) -> list:
         return [
