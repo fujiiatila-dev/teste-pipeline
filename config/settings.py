@@ -53,6 +53,128 @@ class Settings(BaseSettings):
     # Silbeck
     silbeck_token: Optional[str] = None
 
+    # Asaas
+    asaas_api_url: Optional[str] = None
+    asaas_access_token: Optional[str] = None
+
+    # Eduzz
+    eduzz_api_url: Optional[str] = None
+    eduzz_auth_token: Optional[str] = None
+
+    # Piperun
+    piperun_api_url: Optional[str] = None
+    piperun_api_token: Optional[str] = None
+
+    # Ploomes
+    ploomes_user_key: Optional[str] = None
+
+    # Hotmart
+    hotmart_basic_auth: Optional[str] = None
+    hotmart_days_to_fetch: int = 365
+
+    # ClickUp
+    clickup_bearer_token: Optional[str] = None
+    clickup_workspace_id: Optional[str] = None
+    clickup_view_id: Optional[str] = None
+
+    # Native (ExpoConecta)
+    native_api_url: Optional[str] = None
+    native_username: Optional[str] = None
+    native_password: Optional[str] = None
+    native_report_ids: Optional[str] = None
+
+    # Brevo
+    brevo_api_key: Optional[str] = None
+
+    # Sigavi
+    sigavi_api_url: Optional[str] = None
+    sigavi_username: Optional[str] = None
+    sigavi_password: Optional[str] = None
+
+    # Digisac
+    digisac_api_url: Optional[str] = None
+    digisac_token: Optional[str] = None
+
+    # Arbo
+    arbo_token_leads: Optional[str] = None
+    arbo_token_imoveis: Optional[str] = None
+    arbo_api_url_leads: Optional[str] = None
+    arbo_api_url_imoveis: Optional[str] = None
+
+    # CVCRM (CVDW + CVIO)
+    cvcrm_api_dominio: Optional[str] = None
+    cvcrm_email: Optional[str] = None
+    cvcrm_token: Optional[str] = None
+
+    # Superlogica
+    superlogica_app_token: Optional[str] = None
+    superlogica_access_token: Optional[str] = None
+    superlogica_api_url: Optional[str] = None
+
+    # Contact2Sale (C2S)
+    c2s_api_url: Optional[str] = None
+    c2s_token: Optional[str] = None
+
+    # Groner
+    groner_api_url: Optional[str] = None
+    groner_token: Optional[str] = None
+
+    # Acert
+    acert_token: Optional[str] = None
+    acert_api_url: Optional[str] = None
+    acert_store_ids: Optional[str] = None
+
+    # Belle
+    belle_token: Optional[str] = None
+    belle_api_url: Optional[str] = None
+    belle_establishments: Optional[str] = None
+
+    # Facilita
+    facilita_token: Optional[str] = None
+    facilita_instance: Optional[str] = None
+    facilita_api_key: Optional[str] = None
+    facilita_token_user: Optional[str] = None
+
+    # Everflow
+    everflow_api_url: Optional[str] = None
+    everflow_token: Optional[str] = None
+
+    # Evo (W12App)
+    evo_username: Optional[str] = None
+    evo_password: Optional[str] = None
+    evo_api_url: Optional[str] = None
+
+    # Hypnobox
+    hypnobox_login: Optional[str] = None
+    hypnobox_password: Optional[str] = None
+    hypnobox_subdomain: Optional[str] = None
+
+    # Imobzi
+    imobzi_api_secret: Optional[str] = None
+    imobzi_api_url: Optional[str] = None
+
+    # Clicksign
+    clicksign_token: Optional[str] = None
+    clicksign_api_url: Optional[str] = None
+
+    # Vindi
+    vindi_api_token: Optional[str] = None
+    vindi_api_url: Optional[str] = None
+
+    # Moskit
+    moskit_api_key: Optional[str] = None
+    moskit_api_url: Optional[str] = None
+
+    # Mautic
+    mautic_base_url: Optional[str] = None
+    mautic_client_id: Optional[str] = None
+    mautic_client_secret: Optional[str] = None
+
+    # Learn Words (MevBrasil)
+    learn_words_base_url: Optional[str] = None
+    learn_words_client_id: Optional[str] = None
+    learn_words_client_secret: Optional[str] = None
+
     class Config:
         env_file = ".env"
 

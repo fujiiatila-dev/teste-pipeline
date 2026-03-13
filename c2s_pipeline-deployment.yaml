@@ -1,0 +1,16 @@
+deployments:
+- name: "C2S - MultiClient"
+  version: null
+  tags: []
+  concurrency_limit: null
+  description: null
+  entrypoint: flows/c2s_flow.py:c2s_pipeline
+  flow_name: "C2S to ClickHouse"
+  parameters:
+    date_start: null
+    date_stop: null
+  path: /app
+  work_pool:
+    name: default
+  schedule: null
+  timestamp: '2026-03-13T00:00:00.000000+00:00'
