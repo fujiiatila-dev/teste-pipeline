@@ -52,7 +52,16 @@
       "Bash(python -m py_compile flows/moskit_flow.py)",
       "Bash(python -m py_compile flows/mautic_flow.py)",
       "Bash(python -m py_compile flows/learn_words_flow.py)",
-      "Bash(python -m py_compile config/settings.py)"
+      "Bash(python -m py_compile config/settings.py)",
+      "Bash(ls -la *-deployment.yaml)",
+      "Bash(ls -1 *-deployment.yaml)",
+      "Bash(ls *-deployment.yaml)",
+      "Bash(wc -l \"c:/Users/rayan/.gemini/antigravity/scratch/teste-pipeline/connectors\"/*.py)",
+      "Bash(grep -r \"from connectors\" /c/Users/rayan/.gemini/antigravity/scratch/teste-pipeline/flows/*.py)",
+      "Bash(wc -l connectors/*.py flows/*.py)",
+      "Bash(ls flows/*.py)",
+      "Bash(xargs wc -l)",
+      "Bash(wc -l /c/Users/rayan/.gemini/antigravity/scratch/airflow-tasks/crm-integrations/*/main.py)"
     ]
   }
 }

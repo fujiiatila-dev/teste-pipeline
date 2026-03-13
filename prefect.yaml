@@ -1,0 +1,298 @@
+name: teste-pipeline
+
+work_pool:
+  name: default
+
+build: []
+push: []
+pull:
+  - prefect.deployments.steps.set_working_directory:
+      directory: /app
+
+deployments:
+  # ── Ads & Marketing ──────────────────────────────────────
+  - name: meta-ads-multiclient
+    entrypoint: flows/meta_ads_flow.py:meta_ads_pipeline
+    parameters:
+      date_start: null
+      date_stop: null
+    schedules: []
+
+  - name: google-ads-multiclient
+    entrypoint: flows/google_ads_flow.py:google_ads_pipeline
+    parameters:
+      date_start: null
+      date_stop: null
+    schedules: []
+
+  - name: rd-marketing-multiclient
+    entrypoint: flows/rd_marketing_flow.py:rd_marketing_pipeline
+    parameters:
+      date_start: null
+      date_stop: null
+    schedules: []
+
+  - name: brevo-multiclient
+    entrypoint: flows/brevo_flow.py:brevo_pipeline
+    parameters:
+      date_start: null
+      date_stop: null
+    schedules: []
+
+  - name: mautic-multiclient
+    entrypoint: flows/mautic_flow.py:mautic_pipeline
+    parameters:
+      date_start: null
+      date_stop: null
+    schedules: []
+
+  - name: active-campaign-multiclient
+    entrypoint: flows/active_campaign_flow.py:active_campaign_pipeline
+    parameters:
+      date_start: null
+      date_stop: null
+    schedules: []
+
+  # ── CRM ───────────────────────────────────────────────────
+  - name: hubspot-multiclient
+    entrypoint: flows/hubspot_flow.py:hubspot_pipeline
+    parameters:
+      date_start: null
+      date_stop: null
+    schedules: []
+
+  - name: rdcrm-multiclient
+    entrypoint: flows/rdcrm_flow.py:rdcrm_pipeline
+    parameters:
+      date_start: null
+      date_stop: null
+    schedules: []
+
+  - name: pipedrive-multiclient
+    entrypoint: flows/pipedrive_flow.py:pipedrive_pipeline
+    parameters:
+      date_start: null
+      date_stop: null
+    schedules: []
+
+  - name: ploomes-multiclient
+    entrypoint: flows/ploomes_flow.py:ploomes_pipeline
+    parameters:
+      date_start: null
+      date_stop: null
+    schedules: []
+
+  - name: piperun-multiclient
+    entrypoint: flows/piperun_flow.py:piperun_pipeline
+    parameters:
+      date_start: null
+      date_stop: null
+    schedules: []
+
+  - name: moskit-multiclient
+    entrypoint: flows/moskit_flow.py:moskit_pipeline
+    parameters:
+      date_start: null
+      date_stop: null
+    schedules: []
+
+  - name: c2s-multiclient
+    entrypoint: flows/c2s_flow.py:c2s_pipeline
+    parameters:
+      date_start: null
+      date_stop: null
+    schedules: []
+
+  - name: leads2b-multiclient
+    entrypoint: flows/leads2b_flow.py:leads2b_pipeline
+    parameters:
+      date_start: null
+      date_stop: null
+    schedules: []
+
+  # ── CRM Imobiliário ──────────────────────────────────────
+  - name: cvcrm-cvdw-multiclient
+    entrypoint: flows/cvcrm_cvdw_flow.py:cvcrm_cvdw_pipeline
+    parameters:
+      date_start: null
+      date_stop: null
+    schedules: []
+
+  - name: cvcrm-cvio-multiclient
+    entrypoint: flows/cvcrm_cvio_flow.py:cvcrm_cvio_pipeline
+    parameters:
+      date_start: null
+      date_stop: null
+    schedules: []
+
+  - name: arbo-multiclient
+    entrypoint: flows/arbo_flow.py:arbo_pipeline
+    parameters:
+      date_start: null
+      date_stop: null
+    schedules: []
+
+  - name: hypnobox-multiclient
+    entrypoint: flows/hypnobox_flow.py:hypnobox_pipeline
+    parameters:
+      date_start: null
+      date_stop: null
+    schedules: []
+
+  - name: imobzi-multiclient
+    entrypoint: flows/imobzi_flow.py:imobzi_pipeline
+    parameters:
+      date_start: null
+      date_stop: null
+    schedules: []
+
+  - name: facilita-multiclient
+    entrypoint: flows/facilita_flow.py:facilita_pipeline
+    parameters:
+      date_start: null
+      date_stop: null
+    schedules: []
+
+  - name: sigavi-multiclient
+    entrypoint: flows/sigavi_flow.py:sigavi_pipeline
+    parameters:
+      date_start: null
+      date_stop: null
+    schedules: []
+
+  - name: groner-multiclient
+    entrypoint: flows/groner_flow.py:groner_pipeline
+    parameters:
+      date_start: null
+      date_stop: null
+    schedules: []
+
+  # ── E-commerce & Produtos Digitais ────────────────────────
+  - name: shopify-multiclient
+    entrypoint: flows/shopify_flow.py:shopify_pipeline
+    parameters:
+      date_start: null
+      date_stop: null
+    schedules: []
+
+  - name: hotmart-multiclient
+    entrypoint: flows/hotmart_flow.py:hotmart_pipeline
+    parameters:
+      date_start: null
+      date_stop: null
+    schedules: []
+
+  - name: eduzz-multiclient
+    entrypoint: flows/eduzz_flow.py:eduzz_pipeline
+    parameters:
+      date_start: null
+      date_stop: null
+    schedules: []
+
+  # ── Financeiro & Billing ──────────────────────────────────
+  - name: asaas-multiclient
+    entrypoint: flows/asaas_flow.py:asaas_pipeline
+    parameters:
+      date_start: null
+      date_stop: null
+    schedules: []
+
+  - name: superlogica-multiclient
+    entrypoint: flows/superlogica_flow.py:superlogica_pipeline
+    parameters:
+      date_start: null
+      date_stop: null
+    schedules: []
+
+  - name: vindi-multiclient
+    entrypoint: flows/vindi_flow.py:vindi_pipeline
+    parameters:
+      date_start: null
+      date_stop: null
+    schedules: []
+
+  - name: acert-multiclient
+    entrypoint: flows/acert_flow.py:acert_pipeline
+    parameters:
+      date_start: null
+      date_stop: null
+    schedules: []
+
+  - name: clicksign-multiclient
+    entrypoint: flows/clicksign_flow.py:clicksign_pipeline
+    parameters:
+      date_start: null
+      date_stop: null
+    schedules: []
+
+  # ── ERP ───────────────────────────────────────────────────
+  - name: omie-multiclient
+    entrypoint: flows/omie_flow.py:omie_pipeline
+    parameters:
+      date_start: null
+      date_stop: null
+    schedules: []
+
+  - name: everflow-multiclient
+    entrypoint: flows/everflow_flow.py:everflow_pipeline
+    parameters:
+      date_start: null
+      date_stop: null
+    schedules: []
+
+  # ── Outros ────────────────────────────────────────────────
+  - name: clickup-multiclient
+    entrypoint: flows/clickup_flow.py:clickup_pipeline
+    parameters:
+      date_start: null
+      date_stop: null
+    schedules: []
+
+  - name: digisac-multiclient
+    entrypoint: flows/digisac_flow.py:digisac_pipeline
+    parameters:
+      date_start: null
+      date_stop: null
+    schedules: []
+
+  - name: native-multiclient
+    entrypoint: flows/native_flow.py:native_pipeline
+    parameters:
+      date_start: null
+      date_stop: null
+    schedules: []
+
+  - name: evo-multiclient
+    entrypoint: flows/evo_flow.py:evo_pipeline
+    parameters:
+      date_start: null
+      date_stop: null
+    schedules: []
+
+  - name: belle-multiclient
+    entrypoint: flows/belle_flow.py:belle_pipeline
+    parameters:
+      date_start: null
+      date_stop: null
+    schedules: []
+
+  - name: learn-words-multiclient
+    entrypoint: flows/learn_words_flow.py:learn_words_pipeline
+    parameters:
+      date_start: null
+      date_stop: null
+    schedules: []
+
+  - name: paytour-multiclient
+    entrypoint: flows/paytour_flow.py:paytour_pipeline
+    parameters:
+      date_start: null
+      date_stop: null
+    schedules: []
+
+  - name: silbeck-multiclient
+    entrypoint: flows/silbeck_flow.py:silbeck_pipeline
+    parameters:
+      date_start: null
+      date_stop: null
+    schedules: []
