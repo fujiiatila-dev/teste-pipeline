@@ -11,4 +11,5 @@ aiohttp>=3.9.0
 boto3
 s3fs
 pyarrow
+psutil>=5.9.0
 

@@ -61,7 +61,12 @@
       "Bash(wc -l connectors/*.py flows/*.py)",
       "Bash(ls flows/*.py)",
       "Bash(xargs wc -l)",
-      "Bash(wc -l /c/Users/rayan/.gemini/antigravity/scratch/airflow-tasks/crm-integrations/*/main.py)"
+      "Bash(wc -l /c/Users/rayan/.gemini/antigravity/scratch/airflow-tasks/crm-integrations/*/main.py)",
+      "Bash(echo \"exit: $?\")",
+      "Bash(python -m py_compile scripts/alerting.py)",
+      "Bash(python -m py_compile flows/health_check_flow.py)",
+      "Bash(python -m py_compile scripts/monitor.py)",
+      "Bash(python -m py_compile scripts/webhook_notifier.py)"
     ]
   }
 }

@@ -296,3 +296,11 @@ deployments:
       date_start: null
       date_stop: null
     schedules: []
+
+  # ── Infraestrutura ──────────────────────────────────────────
+  - name: health-check
+    entrypoint: flows/health_check_flow.py:health_check_pipeline
+    parameters: {}
+    schedules:
+      - cron: "0 */6 * * *"
+        timezone: "America/Sao_Paulo"

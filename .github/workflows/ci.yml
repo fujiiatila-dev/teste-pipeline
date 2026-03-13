@@ -1,0 +1,76 @@
+name: CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install ruff
+
+      - name: Lint with ruff
+        run: |
+          ruff check connectors/ flows/ config/ scripts/ --select=E9,F63,F7,F82 --output-format=github
+          # E9: runtime errors (SyntaxError, IndentationError)
+          # F63: invalid comparisons (is with literal)
+          # F7: syntax errors in type comments
+          # F82: undefined names
+
+      - name: Compile check (all Python files)
+        run: |
+          echo "Checking connectors..."
+          python -m py_compile config/settings.py
+          for f in connectors/*.py; do
+            python -m py_compile "$f" && echo "  OK: $f" || { echo "  FAIL: $f"; exit 1; }
+          done
+          echo "Checking flows..."
+          for f in flows/*.py; do
+            python -m py_compile "$f" && echo "  OK: $f" || { echo "  FAIL: $f"; exit 1; }
+          done
+          echo "Checking scripts..."
+          for f in scripts/*.py; do
+            python -m py_compile "$f" && echo "  OK: $f" || { echo "  FAIL: $f"; exit 1; }
+          done
+          echo "All files compiled successfully."
+
+      - name: Check for hardcoded secrets
+        run: |
+          # Verifica se .env ou credenciais foram commitadas por engano
+          if git ls-files --cached | grep -qE '\.env$|credentials\.json$|auth\.json$'; then
+            echo "::error::Arquivo de secrets detectado no repositório!"
+            exit 1
+          fi
+          echo "No secret files found in repository."
+
+      - name: Validate prefect.yaml
+        run: |
+          python -c "
+          import yaml
+          with open('prefect.yaml') as f:
+              config = yaml.safe_load(f)
+          deployments = config.get('deployments', [])
+          print(f'prefect.yaml: {len(deployments)} deployments found')
+          for d in deployments:
+              name = d.get('name', 'UNNAMED')
+              entry = d.get('entrypoint', 'MISSING')
+              assert 'entrypoint' in d, f'Deployment {name} missing entrypoint'
+              assert ':' in entry, f'Deployment {name} entrypoint missing function: {entry}'
+              print(f'  OK: {name} -> {entry}')
+          print('All deployments valid.')
+          "

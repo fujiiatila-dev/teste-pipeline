@@ -175,6 +175,18 @@ class Settings(BaseSettings):
     learn_words_client_id: Optional[str] = None
     learn_words_client_secret: Optional[str] = None
 
+    # Alertas & Notificações
+    alert_email_to: str = "suporte@nalk.com.br"
+    alert_email_from: str = "pipeline@nalk.com.br"
+    smtp_host: str = "smtp.gmail.com"
+    smtp_port: int = 587
+    smtp_user: Optional[str] = None
+    smtp_password: Optional[str] = None
+
+    # Backoffice Webhook
+    backoffice_endpoint: Optional[str] = None
+    backoffice_auth_token: Optional[str] = None
+
     class Config:
         env_file = ".env"
 

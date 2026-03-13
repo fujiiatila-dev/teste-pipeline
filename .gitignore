@@ -5,6 +5,8 @@ __pycache__/
 *.so
 .Python
 env/
+venv/
+.venv/
 build/
 develop-eggs/
 dist/
@@ -21,9 +23,12 @@ wheels/
 .installed.cfg
 *.egg
 
-# Secrets
+# Secrets — NUNCA commitar
 .env
 auth.json
+credentials.json
+*.pem
+*.key
 
 # Docker
 .docker
@@ -34,7 +39,17 @@ auth.json
 # IDE
 .vscode/
 .idea/
+*.swp
+*.swo
+*~
 
 # OS
 .DS_Store
 Thumbs.db
+desktop.ini
+
+# Dados temporários
+*.parquet
+*.csv
+output/
+tmp/
